@@ -12,7 +12,7 @@ const metaProcess = data => {
   }
 }
 
-const process = (puid, data) => {
+const statsForEverySection = (puid, data) => {
   const instructorData = sortSectionsByYearThenTerm(data
     .filter(sections => sections.PUID === puid)
   )
@@ -44,7 +44,12 @@ const process = (puid, data) => {
   })
 }
 
+const sectionsTaughtByInstructor = (puid, data) =>
+  sortSectionsByYearThenTerm(data.filter(sections => sections.PUID === puid))
+
 module.exports = {
-  metaProcess,
-  process
+  statsForEverySection,
+  sectionsTaughtByInstructor,
+  process,
+  metaProcess
 }
