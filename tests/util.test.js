@@ -118,12 +118,12 @@ describe('calculateUMIAvg', () => {
   })
 })
 
-describe('getUniqPuids', () => {
+describe('getUniqByKey', () => {
   it('returns the uniq puids of given section', () => {
     let sections = [
       { PUID: 'ABFDj243GRREGsgsg4' }
     ]
-    assert.deepEqual(u.getUniqPuids(sections), ['ABFDj243GRREGsgsg4'])
+    assert.deepEqual(u.getUniqByKey(sections, 'PUID'), ['ABFDj243GRREGsgsg4'])
 
     sections = [
       { PUID: 'ABFDj243GRREGsgsg4' },
@@ -135,6 +135,65 @@ describe('getUniqPuids', () => {
       { PUID: 'ABFDj243GRREGsgsg4' },
       { PUID: '1432rgfhuiFDSFSV' }
     ]
-    assert.deepEqual(u.getUniqPuids(sections), ['ABFDj243GRREGsgsg4', 'SJFIJBCVBCBC', '1432rgfhuiFDSFSV'])
+    assert.deepEqual(u.getUniqByKey(sections, 'PUID'), ['ABFDj243GRREGsgsg4', 'SJFIJBCVBCBC', '1432rgfhuiFDSFSV'])
+  })
+  it('returns the uniq years of given section', () => {
+    let sections = [
+      { year: 2017 }
+    ]
+    assert.deepEqual(u.getUniqByKey(sections, 'year'), [2017])
+
+    sections = [
+      { year: 2017 },
+      { year: 2017 },
+      { year: 2014 },
+      { year: 2013 },
+      { year: 2012 },
+      { year: 2011 }
+    ]
+    assert.deepEqual(u.getUniqByKey(sections, 'year'), [2017, 2014, 2013, 2012, 2011])
+  })
+})
+
+describe('sortSectionsByYearThenTerm', () => {
+  it('takes sections and returns sections sorted by year and term', () => {
+    const input = [
+      { year: 2017, term: 'WC' },
+      { year: 2015, term: 'WC' },
+      { year: 2011, term: 'WC' },
+      { year: 2013, term: 'WC' }
+    ]
+    const output = [
+      { year: 2011, term: 'WC' },
+      { year: 2013, term: 'WC' },
+      { year: 2015, term: 'WC' },
+      { year: 2017, term: 'WC' }
+    ]
+    assert.deepEqual(u.sortSectionsByYearThenTerm(input).reverse(), output)
+  })
+  it('can handle complex cases', () => {
+    const input = [
+      { year: 2015, term: 'W1' },
+      { year: 2009, term: 'WC' },
+      { year: 2016, term: 'W1' },
+      { year: 2020, term: 'W1' },
+      { year: 2016, term: 'W2' },
+      { year: 2011, term: 'S2' },
+      { year: 2009, term: 'WA' },
+      { year: 2017, term: 'S2' },
+      { year: 2011, term: 'S1' }
+    ]
+    const output = [
+      { year: 2009, term: 'WA' },
+      { year: 2009, term: 'WC' },
+      { year: 2011, term: 'S1' },
+      { year: 2011, term: 'S2' },
+      { year: 2015, term: 'W1' },
+      { year: 2016, term: 'W1' },
+      { year: 2016, term: 'W2' },
+      { year: 2017, term: 'S2' },
+      { year: 2020, term: 'W1' }
+    ]
+    assert.deepEqual(u.sortSectionsByYearThenTerm(input).reverse(), output)
   })
 })

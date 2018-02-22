@@ -1,6 +1,8 @@
 const readDB = require('./readDB')
+const { metaProcess, process } = require('./process')
 
 readDB('aggregatedData')
   .then(data => {
-    console.log(data[0])
+    const { puids, years } = metaProcess(data)
+    console.log(process(puids[1], data))
   })

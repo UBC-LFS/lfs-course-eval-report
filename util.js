@@ -38,7 +38,37 @@ const percentFavourable = count => {
   return toTwoDecimal(numberOf4and5s / numberOfResponses)
 }
 
-const getUniqPuids = sections => R.uniq(sections.map(section => section.PUID))
+const getUniqByKey = (sections, key) => R.uniq(sections.map(section => section[key]))
+
+const sortSectionsByYearThenTerm = sections => {
+  const order = {
+    'S1': 0,
+    'SA': 1,
+    'S2': 2,
+    'S': 3,
+    'W1': 4,
+    'WA': 5,
+    'W2': 6,
+    'WC': 7,
+    'W': 8
+  }
+  return sections.sort((a, b) => {
+    if (a.year === b.year) {
+      return (order[a.term] < order[b.term]) ? -1 : (order[a.term] > order[b.term]) ? 1 : 0
+    } else {
+      return a.year < b.year ? -1 : 1
+    }
+  }).reverse()
+}
+
+const calculateStats = (sections, UMI = 'UMI6') => {
+  const counts = sumCounts(sections.map(section => section[UMI].count))
+  return {
+    average: calculateUMIAvg(counts),
+    percentFavourable: percentFavourable(counts),
+    length: sections.length
+  }
+}
 
 module.exports = {
   toTwoDecimal,
@@ -46,5 +76,7 @@ module.exports = {
   calculateUMIAvg,
   sumCounts,
   percentFavourable,
-  getUniqPuids
+  getUniqByKey,
+  sortSectionsByYearThenTerm,
+  calculateStats
 }
