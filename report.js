@@ -3,9 +3,12 @@ const writeReport = require('./writeReport')
 const { generateTable, template } = require('./template')
 const { metaProcess, statsForEverySection, sectionsTaughtByInstructor } = require('./process')
 const trendline = require('./trendline')
+const R = require('ramda')
 
 readDB('aggregatedData')
   .then(data => {
+    // console.log(R.uniq(data.map(section => section.courseLevel)))
+    // console.log(data.filter(section => section.courseLevel === 5).length)
     const { puids, years } = metaProcess(data)
     puids.forEach(puid => {
       const name = data.find(section => section.PUID === puid).instructorName
