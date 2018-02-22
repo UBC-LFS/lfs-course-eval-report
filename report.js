@@ -1,7 +1,14 @@
 const readDB = require('./readDB')
 const writeReport = require('./writeReport')
+const canvasModule = require('canvas')
+const D3Node = require('d3-node')
+const fs = require('fs')
 const { generateTable, template } = require('./template')
 const { metaProcess, process } = require('./process')
+
+const d3n = new D3Node({ canvasModule })
+const canvas = d3n.createCanvas(960, 500)
+canvas.pngStream().pipe(fs.createWriteStream('output.png'))
 
 readDB('aggregatedData')
   .then(data => {
@@ -33,3 +40,4 @@ readDB('aggregatedData')
       writeReport(puid, name, template(name, tables))
     })
   })
+
