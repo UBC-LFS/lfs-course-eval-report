@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "markdown-table": "^1.1.1"
+    "jsonfile": "^4.0.0",
+    "markdown-table": "^1.1.1",
+    "mongodb": "^2.2.34"
   }
 }

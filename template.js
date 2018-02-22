@@ -9,4 +9,4 @@ const template = name => {
   )
 }
 
-export default template
+module.exports = template

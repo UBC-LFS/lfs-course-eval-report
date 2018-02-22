@@ -1,7 +1,7 @@
-import { writeFile, mkdir, stat } from 'fs'
-import { promisify } from 'util'
-import path from 'path'
-import createTemplate from './report-template'
+const { promisify } = require('util')
+const { writeFile, mkdir, stat } = require('fs')
+const path = require('path')
+const createTemplate = require('./report-template')
 
 const writeFileP = promisify(writeFile)
 const mkdirP = promisify(mkdir)
@@ -15,4 +15,4 @@ const writeReport = async (instructorName) => {
     createTemplate(instructorName))
 }
 
-export default writeReport
+module.exports = writeReport
