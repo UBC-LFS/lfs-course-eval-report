@@ -1,14 +1,8 @@
 const readDB = require('./readDB')
 const writeReport = require('./writeReport')
-const canvasModule = require('canvas')
-const D3Node = require('d3-node')
-const fs = require('fs')
 const { generateTable, template } = require('./template')
 const { metaProcess, process } = require('./process')
-
-const d3n = new D3Node({ canvasModule })
-const canvas = d3n.createCanvas(960, 500)
-canvas.pngStream().pipe(fs.createWriteStream('output.png'))
+const trendline = require('./trendline')
 
 readDB('aggregatedData')
   .then(data => {
@@ -41,3 +35,14 @@ readDB('aggregatedData')
     })
   })
 
+console.log(trendline({
+  data: [
+    { key: 'Turkey', value: 123 },
+    { key: 'Canada', value: 13 },
+    { key: 'US', value: 553 },
+    { key: 'England', value: 23 },
+    { key: 'Russia', value: -12 },
+    { key: 'Venezuela', value: 58 },
+    { key: 'France', value: 0 }
+  ]
+}))
