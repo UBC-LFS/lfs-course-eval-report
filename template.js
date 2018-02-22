@@ -1,4 +1,8 @@
-const template = name => {
+const table = require('markdown-table')
+
+const generateTable = arr => table(arr)
+
+const template = (name, arr) => {
   return (
 `# ${name}'s report
 1. First list
@@ -8,4 +12,7 @@ const template = name => {
   )
 }
 
-module.exports = template
+module.exports = {
+  template,
+  generateTable
+}

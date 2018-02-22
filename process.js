@@ -17,7 +17,9 @@ const process = (puid, data) => {
     .filter(sections => sections.PUID === puid)
   )
 
-  return instructorData.map(({ year, term, dept }) => {
+  return instructorData.map(section => {
+    const { year, term, dept, course, enrolment, responseRate, meetsMin } = section
+
     const filteredByFaculty = data
       .filter(section => section.year === year &&
                          section.term === term)
@@ -28,9 +30,15 @@ const process = (puid, data) => {
     return {
       year,
       term,
+      course,
       dept,
+      enrolment,
+      responseRate,
+      meetsMin,
+      section: section.section,
       facultyStats: calculateStats(filteredByFaculty),
-      departmentStats: calculateStats(filteredByDept)
+      departmentStats: calculateStats(filteredByDept),
+      sectionStat: calculateStats([section])
     }
   })
 }
