@@ -62,4 +62,4 @@ typings/
 .env.example
 
 .DS_Store
-source/
+output/

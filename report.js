@@ -1,3 +1,6 @@
 const readDB = require('./readDB')
 
-readDB('aggregatedData').then(result => console.log(result))
+readDB('aggregatedData')
+  .then(data => {
+    console.log(data[0])
+  })
