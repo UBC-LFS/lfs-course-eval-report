@@ -5,11 +5,12 @@ const path = require('path')
 const writeFileP = promisify(writeFile)
 const mkdirP = promisify(mkdir)
 
-const writeReport = async (puid, report) => {
-  if (!existsSync(path.join(__dirname, '/output/', puid))) {
-    await mkdirP(path.join(__dirname, '/output/', puid))
+const writeReport = async (puid, name, report) => {
+  const folderPath = path.join(__dirname, '/output/', name + '_' + puid)
+  if (!existsSync(path.join(folderPath))) {
+    await mkdirP(path.join(folderPath))
   }
-  await writeFileP(path.join(__dirname, '/output/', puid, puid + '.md'), report)
+  await writeFileP(path.join(folderPath, name + '.md'), report)
 }
 
 module.exports = writeReport
