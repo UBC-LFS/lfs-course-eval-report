@@ -39,10 +39,12 @@ console.log(trendline({
   data: [
     { key: 'Turkey', value: 123 },
     { key: 'Canada', value: 13 },
-    { key: 'US', value: 553 },
-    { key: 'England', value: 23 },
-    { key: 'Russia', value: -12 },
-    { key: 'Venezuela', value: 58 },
-    { key: 'France', value: 0 }
+    // { key: 'US', value: 553 },
+    // { key: 'England', value: 23 },
+    // { key: 'Russia', value: 0 },
+    // { key: 'Venezuela', value: 58 },
+    // { key: 'France', value: 0 },
+    // { key: 'Korea', value: 0 },
+    // { key: 'Brazil', value: 15 }
   ]
 }))

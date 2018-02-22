@@ -1,5 +1,4 @@
 const D3Node = require('d3-node')
-const fs = require('fs')
 
 const trendline = ({
   data,
@@ -11,7 +10,7 @@ const trendline = ({
     </div>
   `,
   style: _style = '',
-  width: _width = 900,
+  width: _width = 850,
   height: _height = 500,
   margin: _margin = { top: 20, right: 20, bottom: 30, left: 40 },
   lineColor: _lineColor = 'steelblue',
@@ -35,7 +34,7 @@ const trendline = ({
 
   const g = svg.append('g')
 
-  const xScale = d3.scaleLinear()
+  const xScale = d3.scaleBand()
     .rangeRound([0, width])
   const yScale = d3.scaleLinear()
     .rangeRound([height, 0])
@@ -46,12 +45,15 @@ const trendline = ({
     .tickSize(_tickSize)
     .tickPadding(_tickPadding)
 
+  const offset = width / data.length / 2
+
   const lineChart = d3.line()
-    .x(d => xScale(d.key))
+    .x(d => xScale(d.key) + offset)
     .y(d => yScale(d.value))
 
-  xScale.domain(d3.extent(data, d => d.key))
+  xScale.domain(data.map(d => d.key))
   yScale.domain(d3.extent(data, d => d.value))
+
 
   g.append('g')
     .attr('transform', `translate(0, ${height})`)
