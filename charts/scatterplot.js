@@ -52,16 +52,23 @@ const trendline = ({
   g.append('g')
     .attr('transform', `translate(0, ${height})`)
     .call(xAxis)
+    .selectAll('text')
+    .style('text-anchor', 'end')
+    .attr('dx', '-.95em')
+    .attr('dy', '.15em')
+    .attr('transform', 'rotate(-30)')
 
-  g.append('g').call(yAxis)
+  g.append('g')
+    .call(yAxis)
 
   g.selectAll('circle')
     .data(data)
   .enter().append('circle')
     .attr('cx', d => xScale(d.key))
     .attr('cy', d => yScale(d.value))
-    .style('fill', 'black')
-    .attr('r', 3.5)
+    .style('stroke', 'black')
+    .style('fill', 'none')
+    .attr('r', d => Math.pow(Math.log(d.enrolment), 1.7))
 
   // const lineChart = d3.line()
   //   .

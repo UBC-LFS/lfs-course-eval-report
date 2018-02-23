@@ -46,11 +46,11 @@ const statsForEverySection = (puid, data) => {
 
 const dataForScatter = dataForPuid => {
   const data = dataForPuid
-    .map(section => ({
-      key: section.year + section.term,
-      value: section.UMI6.average,
-      size: section.enrolment,
-      facultyStats: section.facultyStats
+    .map(stats => ({
+      key: stats.year + stats.term,
+      value: stats.sectionStats.average,
+      enrolment: stats.enrolment,
+      facultyStats: stats.facultyStats
     }))
   return {
     data
