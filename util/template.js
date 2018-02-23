@@ -1,9 +1,19 @@
 const table = require('markdown-table')
 
-const markdownTables = instructorSections =>
-  instructorSections.map(sectionData => {
+const markdownTables = instructorSections => {
+  const header = [
+    'course',
+    'term',
+    'class size',
+    'response rate',
+    'meets minimum',
+    'UMI6 average',
+    'UMI6 Faculty average (# of sections)',
+    'UMI6 Department average (# of sections)',
+    'UMI6 percent favourable'
+  ]
+  const instructorResults = instructorSections.map(sectionData => {
     const {
-      instructorName,
       year,
       term,
       course,
@@ -16,56 +26,20 @@ const markdownTables = instructorSections =>
       sectionStats
     } = sectionData
 
-    const header = [
-      'name',
-      'year',
-      'term',
-      'section',
-      'class size',
-      'response rate',
-      'meets minimum',
-      'UMI6 average',
-      'UMI 6 percent favourable',
-      '# of courses'
-    ]
-    const instructor = [
-      instructorName,
-      year,
-      term,
+    return [
       course + ' ' + section,
+      year + term,
       enrolment,
       responseRate,
       meetsMin,
       sectionStats.average,
-      sectionStats.percentFavourable,
-      '-'
+      facultyStats.average + ` (${facultyStats.length})`,
+      departmentStats.average + ` (${departmentStats.length})`,
+      sectionStats.percentFavourable * 100 + '%'
     ]
-    const faculty = [
-      'faculty',
-      '-',
-      '-',
-      '-',
-      '-',
-      '-',
-      '-',
-      facultyStats.average,
-      facultyStats.percentFavourable,
-      facultyStats.length
-    ]
-    const department = [
-      'dept',
-      '-',
-      '-',
-      '-',
-      '-',
-      '-',
-      '-',
-      departmentStats.average,
-      departmentStats.percentFavourable,
-      departmentStats.length
-    ]
-    return table([header, instructor, faculty, department])
-  }).join('\n\n')
+  })
+  return table([header, ...instructorResults])
+}
 
 const template = (name, graph, table) => {
   return (
