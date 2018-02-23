@@ -6,7 +6,7 @@ const writeFileP = promisify(writeFile)
 const mkdirP = promisify(mkdir)
 
 const writeReport = async (puid, name, report) => {
-  const folderPath = path.join(__dirname, '/output/', name + '_' + puid)
+  const folderPath = path.join(__dirname, '../output/', name + '_' + puid)
   if (!existsSync(path.join(folderPath))) {
     await mkdirP(path.join(folderPath))
   }
