@@ -2,8 +2,7 @@ const readDB = require('./util/readDB')
 const writeReport = require('./util/writeReport')
 const { markdownTables, template } = require('./util/template')
 const { metaProcess, statsForEverySection, sectionsTaughtByInstructor } = require('./util/process')
-const trendline = require('./charts/trendline')
-const R = require('ramda')
+const { trendline, scatterplot } = require('./charts/charts')
 
 readDB('aggregatedData')
   .then(data => {
@@ -17,7 +16,7 @@ readDB('aggregatedData')
       const dataForTrend = sectionsForPuid
         .map(section => ({ key: section.year + section.term, value: section.UMI6.average }))
 
-      const graph = trendline({ data: dataForTrend })
+      const graph = scatterplot({ data: dataForTrend })
 
       const dataForPuid = statsForEverySection(puid, data)
       const tables = markdownTables(dataForPuid)

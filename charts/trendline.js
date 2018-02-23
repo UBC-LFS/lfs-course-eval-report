@@ -36,8 +36,12 @@ const trendline = ({
 
   const xScale = d3.scaleBand()
     .rangeRound([0, width])
-  const yScale = d3.scaleLinear()
+    .domain(data.map(d => d.key))
+
+  const yScale = d3.scaleOrdinal()
     .rangeRound([height, 0])
+    .domain(d3.extent(data, d => d.value))
+
   const xAxis = d3.axisBottom(xScale)
     .tickSize(_tickSize)
     .tickPadding(_tickPadding)
@@ -50,10 +54,6 @@ const trendline = ({
   const lineChart = d3.line()
     .x(d => xScale(d.key) + offset)
     .y(d => yScale(d.value))
-
-  xScale.domain(data.map(d => d.key))
-  yScale.domain(d3.extent(data, d => d.value))
-
 
   g.append('g')
     .attr('transform', `translate(0, ${height})`)
