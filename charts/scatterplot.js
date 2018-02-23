@@ -70,11 +70,16 @@ const trendline = ({
     .style('fill', 'none')
     .attr('r', d => Math.pow(Math.log(d.enrolment), 1.7))
 
-  // const lineChart = d3.line()
-  //   .
+  const lineChart = d3.line()
+    .x(d => xScale(d.key))
+    .y(d => yScale(d.facultyStats.average))
 
-  // g.append('path')
-  //   .datum(data)
+  g.append('path')
+    .datum(data)
+    .attr('fill', 'none')
+    .attr('stroke', _lineColor)
+    .attr('stroke-width', _lineWidth)
+    .attr('d', lineChart)
 
   return d3n.chartHTML()
 }
