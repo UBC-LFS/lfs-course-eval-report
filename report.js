@@ -13,7 +13,6 @@ readDB('aggregatedData')
         .instructorName
 
       const dataForPuid = statsForEverySection(puid, data)
-      console.log(dataForPuid)
       const scatterplotData = dataForScatter(dataForPuid)
       const graph = scatterplot(scatterplotData)
 
