@@ -1,26 +1,24 @@
 const readDB = require('./util/readDB')
 const writeReport = require('./util/writeReport')
 const { markdownTables, template } = require('./util/template')
-const { metaProcess, statsForEverySection, sectionsTaughtByInstructor } = require('./util/process')
+const { metaProcess, statsForEverySection, dataForScatter } = require('./util/process')
 const { trendline, scatterplot } = require('./charts/charts')
 
 readDB('aggregatedData')
   .then(data => {
-    const { puids, years } = metaProcess(data)
+    const { puids } = metaProcess(data)
     puids.forEach(puid => {
       const name = data
         .find(section => section.PUID === puid)
         .instructorName
 
-      const sectionsForPuid = sectionsTaughtByInstructor(puid, data)
-      const dataForTrend = sectionsForPuid
-        .map(section => ({ key: section.year + section.term, value: section.UMI6.average }))
-
-      const graph = scatterplot({ data: dataForTrend })
-
       const dataForPuid = statsForEverySection(puid, data)
+
+      const scatterplotData = dataForScatter(dataForPuid)
+      const graph = scatterplot(scatterplotData)
+
       const tables = markdownTables(dataForPuid)
-  
+
       writeReport(puid, name, template(name, graph, tables))
     })
   })

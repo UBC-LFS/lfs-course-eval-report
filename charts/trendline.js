@@ -34,11 +34,11 @@ const trendline = ({
 
   const g = svg.append('g')
 
-  const xScale = d3.scaleBand()
+  const xScale = d3.scalePoint()
     .rangeRound([0, width])
     .domain(data.map(d => d.key))
 
-  const yScale = d3.scaleOrdinal()
+  const yScale = d3.scaleLinear()
     .rangeRound([height, 0])
     .domain(d3.extent(data, d => d.value))
 
@@ -49,10 +49,8 @@ const trendline = ({
     .tickSize(_tickSize)
     .tickPadding(_tickPadding)
 
-  const offset = width / data.length / 2
-
   const lineChart = d3.line()
-    .x(d => xScale(d.key) + offset)
+    .x(d => xScale(d.key))
     .y(d => yScale(d.value))
 
   g.append('g')

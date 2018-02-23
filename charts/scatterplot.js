@@ -63,6 +63,12 @@ const trendline = ({
     .style('fill', 'black')
     .attr('r', 3.5)
 
+  // const lineChart = d3.line()
+  //   .
+
+  // g.append('path')
+  //   .datum(data)
+
   return d3n.chartHTML()
 }
 

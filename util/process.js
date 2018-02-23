@@ -22,7 +22,7 @@ const statsForEverySection = (puid, data) => {
 
     const filteredByFaculty = data
       .filter(section => section.year === year &&
-                         section.term === term)
+        section.term === term)
 
     const filteredByDept = filteredByFaculty
       .filter(section => section.dept === dept)
@@ -44,12 +44,22 @@ const statsForEverySection = (puid, data) => {
   })
 }
 
-const sectionsTaughtByInstructor = (puid, data) =>
-  sortSectionsByYearThenTerm(data.filter(sections => sections.PUID === puid))
+const dataForScatter = dataForPuid => {
+  const data = dataForPuid
+    .map(section => ({
+      key: section.year + section.term,
+      value: section.UMI6.average,
+      size: section.enrolment,
+      facultyStats: section.facultyStats
+    }))
+  return {
+    data
+  }
+}
 
 module.exports = {
   statsForEverySection,
-  sectionsTaughtByInstructor,
   process,
-  metaProcess
+  metaProcess,
+  dataForScatter
 }
