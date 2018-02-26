@@ -35,7 +35,7 @@ const markdownTables = instructorSections => {
       sectionStats.average,
       facultyStats.average + ` (${facultyStats.length})`,
       departmentStats.average + ` (${departmentStats.length})`,
-      sectionStats.percentFavourable * 100 + '%'
+      Math.round(sectionStats.percentFavourable * 100) + '%'
     ]
   })
   return table([header, ...instructorResults])

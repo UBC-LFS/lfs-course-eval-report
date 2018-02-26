@@ -70,6 +70,14 @@ const trendline = ({
     .style('fill', 'none')
     .attr('r', d => Math.pow(Math.log(d.enrolment), 1.7))
 
+  // g.selectAll('text')
+  //   .data(data)
+  // .enter().append('text')
+  //   .text(d => d.course)
+  //   .attr('x', d => xScale(d.key))
+  //   .attr('y', d => yScale(d.value))
+  //   .attr('font-size', '11px')
+
   g.selectAll('rect')
     .data(data)
   .enter().append('rect')

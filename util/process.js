@@ -50,7 +50,8 @@ const dataForScatter = dataForPuid => {
       key: stats.year + stats.term,
       value: stats.sectionStats.average,
       enrolment: stats.enrolment,
-      facultyStats: stats.facultyStats
+      facultyStats: stats.facultyStats,
+      course: stats.course
     }))
   return {
     data
