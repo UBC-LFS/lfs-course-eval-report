@@ -70,6 +70,15 @@ const calculateStats = (sections, UMI = 'UMI6') => {
   }
 }
 
+const expandCount = count => {
+  let result = []
+  Object.keys(count).map(x => {
+    const temp = Array(count[x]).fill(Number(x))
+    result = [...result, ...temp]
+  })
+  return result
+}
+
 module.exports = {
   toTwoDecimal,
   fillInMissingCounts,
@@ -78,5 +87,6 @@ module.exports = {
   percentFavourable,
   getUniqByKey,
   sortSectionsByYearThenTerm,
-  calculateStats
+  calculateStats,
+  expandCount
 }

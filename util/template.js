@@ -7,10 +7,10 @@ const markdownTables = instructorSections => {
     'class size',
     'response rate',
     'meets minimum',
-    'UMI6 average',
-    'UMI6 Faculty average (# of sections)',
-    'UMI6 Department average (# of sections)',
-    'UMI6 percent favourable'
+    'UMI6 mean',
+    'UMI6 Fac mean (# of sections)',
+    'UMI6 Dept mean (# of sections)',
+    'UMI6 % favourable'
   ]
   const instructorResults = instructorSections.map(sectionData => {
     const {
