@@ -79,6 +79,28 @@ const expandCount = count => {
   return result
 }
 
+const calculateDispersion = count => {
+  count = fillInMissingCounts(count)
+
+  const numberOfResponses = Object.keys(count).reduce((acc, curKey) => (acc += count[curKey]), 0)
+  const dispersionObj = {}
+
+  for (let i = 1; i <= 5; i++) {
+    const key = String(i)
+    const prevKey = String(i - 1)
+    dispersionObj[key] = {
+      count: count[key],
+      proportion: count[key] / numberOfResponses
+    }
+    if (i === 1) dispersionObj[key].cumulativeProp = dispersionObj[key].proportion
+    else dispersionObj[key].cumulativeProp = dispersionObj[prevKey].cumulativeProp + dispersionObj[key].proportion
+    dispersionObj[key].oneMinusF = 1 - dispersionObj[key].cumulativeProp
+    dispersionObj[key].finalF = dispersionObj[key].cumulativeProp * dispersionObj[key].oneMinusF
+  }
+
+  return toTwoDecimal(Object.keys(dispersionObj).reduce((acc, key) => (acc += dispersionObj[key].finalF), 0))
+}
+
 module.exports = {
   toTwoDecimal,
   fillInMissingCounts,
@@ -88,5 +110,6 @@ module.exports = {
   getUniqByKey,
   sortSectionsByYearThenTerm,
   calculateStats,
-  expandCount
+  expandCount,
+  calculateDispersion
 }
