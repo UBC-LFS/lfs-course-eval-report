@@ -1,5 +1,5 @@
 const readDB = require('./util/readDB')
-const writeReport = require('./util/writeReport')
+const writeInstructorReport = require('./util/writeInstructorReport')
 const { markdownTables, template } = require('./util/template')
 const { metaProcess, statsForEverySection, dataForScatter } = require('./util/process')
 const { trendline, scatterplot } = require('./charts/charts')
@@ -18,6 +18,6 @@ readDB('aggregatedData')
 
       const tables = markdownTables(dataForPuid)
 
-      writeReport(puid, name, template(name, graph, tables))
+      writeInstructorReport(puid, name, template(name, graph, tables))
     })
   })
