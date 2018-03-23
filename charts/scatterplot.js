@@ -63,7 +63,7 @@ const trendline = ({
 
   g.selectAll('circle')
     .data(data)
-  .enter().append('circle')
+    .enter().append('circle')
     .attr('cx', d => xScale(d.key))
     .attr('cy', d => yScale(d.value))
     .style('stroke', 'black')
@@ -80,7 +80,7 @@ const trendline = ({
 
   g.selectAll('rect')
     .data(data)
-  .enter().append('rect')
+    .enter().append('rect')
     .attr('x', d => xScale(d.key) - 8)
     .attr('y', d => yScale(d.facultyStats.average))
     .attr('width', 16)
