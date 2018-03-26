@@ -30,7 +30,7 @@ const markdownTables = instructorSections => {
       course + ' ' + section,
       year + term,
       enrolment,
-      responseRate,
+      Math.round(responseRate * 100) + '%',
       meetsMin,
       sectionStats.average,
       facultyStats.average + ` (${facultyStats.length})`,
