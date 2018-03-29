@@ -203,6 +203,6 @@ describe('pearsonCorrelation', () => {
     assert.deepEqual(u.pearsonCorrelation([[1, 2], [1, 2]], 0, 1), 1)
     assert.deepEqual(u.pearsonCorrelation([[1, 2], [2, 1]], 0, 1), -1)
     assert.deepEqual(u.pearsonCorrelation([[1, 2, 3], [1, 2, 3]], 0, 1), 1)
-    assert.deepEqual(u.pearsonCorrelation([[1,2,7,1,2,4,5,6,71,23,5342], [1,23,5,25,123,6,8,15,-1923,123,0]], 0, 1), 1)
+    assert.deepEqual(u.pearsonCorrelation([[1, 2, 7, 1, 2, 4, 5, 6, 71, 23, 5342], [1, 23, 5, 25, 123, 6, 8, 15, -1923, 123, 0]], 0, 1), 1)
   })
 })

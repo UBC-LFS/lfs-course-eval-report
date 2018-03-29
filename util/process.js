@@ -1,5 +1,4 @@
 const { getUniqByKey, sortSectionsByYearThenTerm, calculateStats } = require('./util')
-const R = require('ramda')
 
 const metaProcess = data => {
   const uniqPUIDS = getUniqByKey(data, 'PUID')
