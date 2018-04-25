@@ -2,8 +2,9 @@ const readDB = require('./util/readDB')
 const writeInstructorReport = require('./util/writeInstructorReport')
 const template = require('./util/template')
 const overviewTable = require('./tables/overviewTable')
-const { metaProcess, statsForEverySection, dataForScatter } = require('./util/process')
+const { metaProcess, statsForEverySection, dataForScatter, dataForKPI } = require('./util/process')
 const { trendline, scatterplot } = require('./charts/charts')
+const kpi = require('./overview/kpi')
 
 readDB('aggregatedData')
   .then(data => {
@@ -15,10 +16,12 @@ readDB('aggregatedData')
 
       const dataForPuid = statsForEverySection(puid, data)
       const scatterplotData = dataForScatter(dataForPuid)
+      const kpiData = dataForKPI(dataForPuid)
+      const kpiTiles = kpi(kpiData)
       const graph = scatterplot(scatterplotData)
 
       const tables = overviewTable(dataForPuid)
 
-      writeInstructorReport(puid, name, template(name, graph, tables))
+      writeInstructorReport(puid, name, template(name, kpiTiles, graph, tables))
     })
   })

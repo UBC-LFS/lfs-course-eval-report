@@ -1,4 +1,5 @@
-const { getUniqByKey, sortSectionsByYearThenTerm, calculateStats } = require('./util')
+const { getUniqByKey, sortSectionsByYearThenTerm, calculateStats, sumCounts, calculateUMIAvg, percentFavourable, sumEnrolment } = require('./util')
+const R = require('ramda')
 
 const metaProcess = data => {
   const uniqPUIDS = getUniqByKey(data, 'PUID')
@@ -57,9 +58,35 @@ const dataForScatter = dataForPuid => {
   }
 }
 
+const dataForKPI = dataForPuid => {
+  const years = R.uniq(dataForPuid.map(course => Number(course.year)))
+  const curYear = Math.max(...years)
+  const curYearSections = dataForPuid.filter(section => section.year === curYear)
+  const prevYearSections = dataForPuid.filter(section => section.year === curYear - 1)
+  const curUMI6Count = sumCounts(curYearSections.map(section => section.sectionStats.count))
+  const prevUMI6Count = sumCounts(prevYearSections.map(section => section.sectionStats.count))
+  return {
+    currentYear: {
+      umi6: calculateUMIAvg(curUMI6Count),
+      percentFavourable: percentFavourable(curUMI6Count),
+      numCoursesTaught: curYearSections.length,
+      numStudentsTaught: sumEnrolment(curYearSections)
+
+    },
+    previousYear: {
+      umi6: calculateUMIAvg(prevUMI6Count),
+      percentFavourable: percentFavourable(prevUMI6Count),
+      numCoursesTaught: prevYearSections.length,
+      numStudentsTaught: sumEnrolment(prevYearSections)
+    },
+    lastYear: curYear
+  }
+}
+
 module.exports = {
   statsForEverySection,
   process,
   metaProcess,
-  dataForScatter
+  dataForScatter,
+  dataForKPI
 }
