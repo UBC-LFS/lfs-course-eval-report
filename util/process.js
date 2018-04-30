@@ -83,7 +83,7 @@ const dataForKPI = dataForPuid => {
   }
 }
 
-const dataForDepartmentRanking = (data, kpiData) => {
+const dataForDepartmentStatistics = (data, kpiData) => {
   const groupByPUID = R.groupBy(function (course) {
     return course.PUID
   })(data)
@@ -112,5 +112,5 @@ module.exports = {
   metaProcess,
   dataForScatter,
   dataForKPI,
-  dataForDepartmentRanking
+  dataForDepartmentStatistics
 }
