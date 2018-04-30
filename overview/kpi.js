@@ -1,6 +1,6 @@
 const table = require('markdown-table')
 const {toTwoDecimal} = require('../util/util.js')
-const kpi = data => {
+const kpi = (data, deptStats) => {
   const currentYear = [
     data.currentYear.umi6,
     data.currentYear.percentFavourable,
@@ -26,11 +26,15 @@ const kpi = data => {
     } else { comparisons.push(caption) }
   }
   const values = currentYear.map(x => `<p style="font-size: 30px">` + x + `</p>`)
+  values.push(`<p style="font-size: 30px">` + '#' + deptStats.deptRanking + ' of ' + deptStats.deptSize + `</p>`)
+  comparisons.push('In ' + data.lastYear)
   const header = [
     `<p style="font-size: 14px">` + 'Mean UMI6' + `</p>`,
     `<p style="font-size: 14px">` + 'Percent Favourable' + `</p>`,
     `<p style="font-size: 14px">` + '# of Courses Taught' + `</p>`,
-    `<p style="font-size: 14px">` + '# of Students Taught' + `</p>`
+    `<p style="font-size: 14px">` + '# of Students Taught' + `</p>`,
+    `<p style="font-size: 14px">` + 'Department Ranking' + `</p>`
+
   ]
   const kpiResults = [
     values,

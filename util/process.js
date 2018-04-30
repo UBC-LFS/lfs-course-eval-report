@@ -83,10 +83,34 @@ const dataForKPI = dataForPuid => {
   }
 }
 
+const dataForDepartmentRanking = (data, kpiData) => {
+  const groupByPUID = R.groupBy(function (course) {
+    return course.PUID
+  })(data)
+  const UMI6Averages = []
+  Object.keys(groupByPUID).forEach(function (puid) {
+    const dataForPUID = groupByPUID[puid]
+    const curYearSections = dataForPUID.filter(section => section.year === kpiData.lastYear)
+    if (curYearSections.length > 0) {
+      const curUMI6Count = sumCounts(curYearSections.map(section => section.UMI6.count))
+      UMI6Averages.push(calculateUMIAvg(curUMI6Count))
+    }
+  })
+  UMI6Averages.sort(function (a, b) {
+    return b - a
+  })
+  return {
+    deptRanking: UMI6Averages.findIndex(function (umi6) {
+      return umi6 === kpiData.currentYear.umi6
+    }) + 1,
+    deptSize: UMI6Averages.length
+  }
+}
 module.exports = {
   statsForEverySection,
   process,
   metaProcess,
   dataForScatter,
-  dataForKPI
+  dataForKPI,
+  dataForDepartmentRanking
 }
