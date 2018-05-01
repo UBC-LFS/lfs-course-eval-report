@@ -1,15 +1,11 @@
-const template = (name, graph, overviewTable, ...sectionTables) => {
-  const sections = sectionTables.join('\n')
-
+const template = (name, kpiTiles, graph, table) => {
   return (
     `![faculty logo](../../_assets/logo.png)
 # ${name}'s report
 
+${kpiTiles}
+
 ${graph}
-
-${overviewTable}
-
-${sections}
 `
   )
 }

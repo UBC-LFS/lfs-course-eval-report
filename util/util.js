@@ -29,6 +29,9 @@ const sumCounts = counts => counts.reduce((acc, cur) => {
   return acc
 }, {})
 
+const sumEnrolment = classes =>
+  R.reduce((acc, record) => (acc + record.enrolment), 0, classes)
+
 const percentFavourable = count => {
   count = fillInMissingCounts(count)
 
@@ -153,5 +156,6 @@ module.exports = {
   calculateStats,
   expandCount,
   calculateDispersion,
-  pearsonCorrelation
+  pearsonCorrelation,
+  sumEnrolment
 }
