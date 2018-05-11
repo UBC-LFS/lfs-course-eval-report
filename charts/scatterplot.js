@@ -49,14 +49,29 @@ const trendline = ({
   const yAxis = d3.axisLeft(yScale)
     .tickSize(_tickSize)
 
+  g.append("text") // X-axis Label
+    .attr("class", "x label")
+    .attr("text-anchor", "end")
+    .attr("x", width)
+    .attr("y", height - 6)
+    .text("Term")
+
+  g.append("text") // Y-axis Label
+    .attr("class", "y label")
+    .attr("text-anchor", "end")
+    .attr("y", 6)
+    .attr("dy", ".75em")
+    .attr("transform", "rotate(-90)")
+    .text("UMI6 Average");
+
   g.append('g')
-    .attr('transform', `translate(0, ${height})`)
-    .call(xAxis)
-    .selectAll('text')
-    .style('text-anchor', 'end')
-    .attr('dx', '-.95em')
-    .attr('dy', '.15em')
-    .attr('transform', 'rotate(-30)')
+      .attr('transform', `translate(0, ${height})`)
+      .call(xAxis)
+      .selectAll('text')
+      .style('text-anchor', 'end')
+      .attr('dx', '-.95em')
+      .attr('dy', '.15em')
+      .attr('transform', 'rotate(-30)')
 
   g.append('g')
     .call(yAxis)
