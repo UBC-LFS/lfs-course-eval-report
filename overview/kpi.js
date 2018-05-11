@@ -17,13 +17,15 @@ const kpi = (data, deptStats) => {
   const upArrow = `<svg width="20" height="20" class="svg-inline--fa fa-caret-up fa-w-10" aria-hidden="true" data-fa-processed="" data-prefix="fas" data-icon="caret-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="green" d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z"></path></svg>`
   const comparisons = []
   for (var i = 0; i < currentYear.length; i++) {
-    const diff = toTwoDecimal(currentYear[i] - prevYear[i])
-    const caption = ' ' + diff + ' (' + (toTwoDecimal(currentYear[i] / prevYear[i] * 100 - 100)) + '%' + ') ' + 'from ' + (parseInt(data.lastYear) - 1)
-    if (diff < 0) {
-      comparisons.push(downArrow + caption)
-    } else if (diff > 0) {
-      comparisons.push(upArrow + caption)
-    } else { comparisons.push(caption) }
+    if(prevYear[i]) {
+      const diff = toTwoDecimal(currentYear[i] - prevYear[i])
+      const caption = ' ' + diff + ' (' + (toTwoDecimal(currentYear[i] / prevYear[i] * 100 - 100)) + '%' + ') ' + 'from ' + (parseInt(data.lastYear) - 1)
+      if (diff < 0) {
+        comparisons[i] = downArrow + caption
+      } else if (diff > 0) {
+        comparisons[i] = upArrow + caption
+      } else { comparisons[i] = caption }
+    }
   }
   const values = currentYear.map(x => `<p style="font-size: 30px">` + x + `</p>`)
   values.push(`<p style="font-size: 30px">` + '#' + deptStats.deptRanking + ' of ' + deptStats.deptSize + `</p>`)
