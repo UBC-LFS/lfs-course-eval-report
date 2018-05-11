@@ -6,6 +6,8 @@ const template = (name, kpiTiles, graph, table) => {
 ${kpiTiles}
 
 ${graph}
+
+${table}
 `
   )
 }
