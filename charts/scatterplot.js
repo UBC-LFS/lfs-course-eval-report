@@ -65,13 +65,13 @@ const trendline = ({
     .text("UMI6 Average");
 
   g.append('g')
-      .attr('transform', `translate(0, ${height})`)
-      .call(xAxis)
-      .selectAll('text')
-      .style('text-anchor', 'end')
-      .attr('dx', '-.95em')
-      .attr('dy', '.15em')
-      .attr('transform', 'rotate(-30)')
+    .attr('transform', `translate(0, ${height})`)
+    .call(xAxis)
+    .selectAll('text')
+    .style('text-anchor', 'end')
+    .attr('dx', '-.95em')
+    .attr('dy', '.15em')
+    .attr('transform', 'rotate(-30)')
 
   g.append('g')
     .call(yAxis)
@@ -102,7 +102,96 @@ const trendline = ({
     .attr('height', 2)
     .style('fill', 'black')
 
+  // Circular Legend
+  // TODO: move out as separate file
+  function circleLegend(selection) {
+    let instance = {}
+
+    const api = {
+      domain: [30, 200], // the values min and max
+      range: [0, 200], // the circle area/size mapping
+      values: [50, 200], // values for circles
+      width: 200,          // legend position
+      height: 400,         // legend position
+      circleColor: '#888',
+      textPadding: 30,
+      textColor: '#000'
+    }
+
+    const circleScale = d => Math.pow(Math.log(d), 1.7)
+
+    instance.render = function () {
+      const s = selection.append('g')
+        .attr('class', 'legend-wrap')
+        .attr('transform', 'translate(0,' + d3.max(api.values) + ')')
+
+      // create circles with given values
+      s.append('g')
+        .attr('class', 'values-wrap')
+        .selectAll('circle')
+        .data(api.values)
+        .enter().append('circle')
+        .attr('class', d => 'values values-' + d)
+        .attr('r', d => circleScale(d))
+        .attr('cx', api.width / 2)
+        .attr('cy', d => api.height / 2 - circleScale(d))
+        .style('fill', 'none')
+        .style('stroke', api.circleColor)
+        .style('opacity', 0.5)
+
+      // append some lines to the circles based on values
+      s.append('g')
+        .attr('class', 'values-line-wrap')
+        .selectAll('.values-labels')
+        .data(api.values)
+        .enter().append('line')
+        .attr('x1', d => api.width/2 + circleScale(d))
+        .attr('x2', d => api.width/2 + d/4 + 10)
+        .attr('y1', d => api.height / 2 - circleScale(d))
+        .attr('y2', d => api.height / 2 - circleScale(d))
+        .style('stroke', api.textColor)
+        .style('stroke-dasharray', ('2,2'))
+
+      // append labels to lines
+      s.append('g')
+        .attr('class', 'values-labels-wrap')
+        .selectAll('.values-labels')
+        .data(api.values)
+        .enter().append('text')
+        .attr('x', d => api.width/2 + d/4 + 30)
+        .attr('y', d => (api.height / 2 - circleScale(d)) + 5)
+        .attr('shape-rendering', 'crispEdges')
+        .style('text-anchor', 'end')
+        .style('fill', api.textColor)
+        .style("font-size", "10px")
+        .text(d => d)
+
+      return instance
+    }
+
+    for (let key in api) {
+      instance[key] = getSet(key, instance).bind(api)
+    }
+
+    return instance
+
+    function getSet(option, component) {
+      return function (_) {
+        if (!arguments.length) {
+          return this[option];
+        }
+        this[option] = _;
+        return component;
+      }
+    }
+  }
+
+  var legend = circleLegend(svg)
+  legend.render()
+
   return d3n.chartHTML()
 }
+
+
 
 module.exports = trendline
