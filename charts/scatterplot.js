@@ -103,16 +103,15 @@ const trendline = ({
     .style('fill', 'black')
 
   // Circular Legend
-  // TODO: move out as separate file
   function circleLegend(selection) {
     let instance = {}
 
     const api = {
       domain: [30, 200], // the values min and max
       range: [0, 200], // the circle area/size mapping
-      values: [50, 200], // values for circles
-      width: 200,          // legend position
-      height: 400,         // legend position
+      values: [40, 100], // values for circles
+      width: width - 80,          // legend position
+      height: height - 150,         // legend position
       circleColor: '#888',
       textPadding: 30,
       textColor: '#000'
@@ -133,8 +132,8 @@ const trendline = ({
         .enter().append('circle')
         .attr('class', d => 'values values-' + d)
         .attr('r', d => circleScale(d))
-        .attr('cx', api.width / 2)
-        .attr('cy', d => api.height / 2 - circleScale(d))
+        .attr('cx', api.width)
+        .attr('cy', d => api.height - circleScale(d))
         .style('fill', 'none')
         .style('stroke', api.circleColor)
         .style('opacity', 0.5)
@@ -145,26 +144,32 @@ const trendline = ({
         .selectAll('.values-labels')
         .data(api.values)
         .enter().append('line')
-        .attr('x1', d => api.width/2 + circleScale(d))
-        .attr('x2', d => api.width/2 + d/4 + 10)
-        .attr('y1', d => api.height / 2 - circleScale(d))
-        .attr('y2', d => api.height / 2 - circleScale(d))
+        .attr('x1', d => api.width+ circleScale(d))
+        .attr('x2', d => api.width + d/4 + 10)
+        .attr('y1', d => api.height - circleScale(d))
+        .attr('y2', d => api.height - circleScale(d))
         .style('stroke', api.textColor)
         .style('stroke-dasharray', ('2,2'))
 
-      // append labels to lines
+      // append value labels to lines
       s.append('g')
         .attr('class', 'values-labels-wrap')
         .selectAll('.values-labels')
         .data(api.values)
         .enter().append('text')
-        .attr('x', d => api.width/2 + d/4 + 30)
-        .attr('y', d => (api.height / 2 - circleScale(d)) + 5)
+        .attr('x', d => api.width + d/4 + 30)
+        .attr('y', d => (api.height - circleScale(d)) + 5)
         .attr('shape-rendering', 'crispEdges')
         .style('text-anchor', 'end')
         .style('fill', api.textColor)
         .style("font-size", "10px")
         .text(d => d)
+
+      // add legend title
+      s.append('text')
+        .attr('x', api.width - 10)
+        .attr('y', api.height - 40)
+        .text('Class Size')
 
       return instance
     }
@@ -191,7 +196,5 @@ const trendline = ({
 
   return d3n.chartHTML()
 }
-
-
 
 module.exports = trendline
