@@ -10,7 +10,7 @@ const facultyOverviewTable = data => {
     'LFS % favourable',
     'UBC % favourable'
   ]
-  
+  console.log(data)
 }
 
 module.exports = facultyOverviewTable
