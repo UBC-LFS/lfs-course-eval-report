@@ -27,8 +27,7 @@ const facultyOverviewTable = data => {
       sections['UMI5'].count,
       sections['UMI6'].count
     ]
-  })
-  )
+  }))
 
   console.log(summedUMICounts)
 }
