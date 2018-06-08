@@ -2,7 +2,14 @@ const readDB = require('./util/readDB')
 const writeInstructorReport = require('./util/writeInstructorReport')
 const template = require('./util/template')
 const overviewTable = require('./tables/overviewTable')
-const { metaProcess, statsForEverySection, dataForScatter, dataForKPI, dataForDepartmentStatistics } = require('./util/process')
+const facultyOverviewTable = require('./tables/facultyOverviewTable')
+const {
+  metaProcess,
+  statsForEverySection,
+  dataForScatter,
+  dataForKPI,
+  dataForDepartmentStatistics
+} = require('./util/process')
 const { trendline, scatterplot } = require('./charts/charts')
 const kpi = require('./overview/kpi')
 
@@ -25,4 +32,5 @@ readDB('aggregatedData')
 
       writeInstructorReport(puid, name, template(name, kpiTiles, graph, tables))
     })
+    facultyOverviewTable(data)
   })

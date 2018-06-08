@@ -1,6 +1,6 @@
 const table = require('markdown-table')
 
-const facultyOverviewTable = sections => {
+const facultyOverviewTable = data => {
   const header = [
     'Year',
     'LFS mean',
@@ -10,7 +10,7 @@ const facultyOverviewTable = sections => {
     'LFS % favourable',
     'UBC % favourable'
   ]
-  const sections 
+  
 }
 
 module.exports = facultyOverviewTable
