@@ -7,6 +7,9 @@ const {
   sumAllUMICounts
 } = require('../util/util')
 
+const years = [2014, 2015, 2016, 2017, 2018]
+const terms = ['W', 'S']
+
 const facultyOverviewTable = data => {
   const header = [
     'Year',
