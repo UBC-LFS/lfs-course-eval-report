@@ -29,6 +29,15 @@ const sumCounts = counts => counts.reduce((acc, cur) => {
   return acc
 }, {})
 
+const sumAllUMICounts = arrOfCounts => ({
+  'UMI1': sumCounts(arrOfCounts.map(x => x[0])),
+  'UMI2': sumCounts(arrOfCounts.map(x => x[1])),
+  'UMI3': sumCounts(arrOfCounts.map(x => x[2])),
+  'UMI4': sumCounts(arrOfCounts.map(x => x[3])),
+  'UMI5': sumCounts(arrOfCounts.map(x => x[4])),
+  'UMI6': sumCounts(arrOfCounts.map(x => x[5]))
+})
+
 const sumEnrolment = classes =>
   R.reduce((acc, record) => (acc + record.enrolment), 0, classes)
 
@@ -157,5 +166,6 @@ module.exports = {
   expandCount,
   calculateDispersion,
   pearsonCorrelation,
-  sumEnrolment
+  sumEnrolment,
+  sumAllUMICounts
 }
