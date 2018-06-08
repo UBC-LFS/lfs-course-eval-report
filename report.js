@@ -1,8 +1,10 @@
 const readDB = require('./util/readDB')
 const writeInstructorReport = require('./util/writeInstructorReport')
 const template = require('./util/template')
-const overviewTable = require('./tables/overviewTable')
-const facultyOverviewTable = require('./tables/facultyOverviewTable')
+const {
+  overviewTable,
+  facultyOverviewTable
+} = require('./tables/index')
 const {
   metaProcess,
   statsForEverySection,
