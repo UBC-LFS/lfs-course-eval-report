@@ -10,7 +10,7 @@ const {
   dataForKPI,
   dataForDepartmentStatistics
 } = require('./util/process')
-const { trendline, scatterplot } = require('./charts/charts')
+const { trendline, scatterplot } = require('./charts/index')
 const kpi = require('./overview/kpi')
 
 readDB('aggregatedData')
