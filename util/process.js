@@ -1,4 +1,12 @@
-const { getUniqByKey, sortSectionsByYearThenTerm, calculateStats, sumCounts, calculateUMIAvg, percentFavourable, sumEnrolment } = require('./util')
+const {
+  getUniqByKey,
+  sortSectionsByYearThenTerm,
+  calculateStats,
+  sumCounts,
+  calculateUMIAvg,
+  percentFavourable,
+  sumEnrolment
+} = require('./util')
 const R = require('ramda')
 
 const metaProcess = data => {
@@ -84,11 +92,9 @@ const dataForKPI = dataForPuid => {
 }
 
 const dataForDepartmentStatistics = (data, kpiData) => {
-  const groupByPUID = R.groupBy(function (course) {
-    return course.PUID
-  })(data)
+  const groupByPUID = R.groupBy(course => course.PUID)(data)
   const UMI6Averages = []
-  Object.keys(groupByPUID).forEach(function (puid) {
+  Object.keys(groupByPUID).forEach(puid => {
     const dataForPUID = groupByPUID[puid]
     const curYearSections = dataForPUID.filter(section => section.year === kpiData.lastYear)
     if (curYearSections.length > 0) {
@@ -96,13 +102,9 @@ const dataForDepartmentStatistics = (data, kpiData) => {
       UMI6Averages.push(calculateUMIAvg(curUMI6Count))
     }
   })
-  UMI6Averages.sort(function (a, b) {
-    return b - a
-  })
+  UMI6Averages.sort((a, b) => b - a)
   return {
-    deptRanking: UMI6Averages.findIndex(function (umi6) {
-      return umi6 === kpiData.currentYear.umi6
-    }) + 1,
+    deptRanking: UMI6Averages.findIndex(umi6 => umi6 === kpiData.currentYear.umi6) + 1,
     deptSize: UMI6Averages.length
   }
 }

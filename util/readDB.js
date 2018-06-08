@@ -5,9 +5,9 @@ const url = 'mongodb://localhost:27017/courseval'
 const readDB = (collectionName) => new Promise((resolve, reject) => {
   MongoClient.connect(url, (err, db) => {
     if (err) reject(err)
-    if(!db) {
+    if (!db) {
       console.warn('No database found. Please ensure that mongo is started')
-      return;
+      return
     }
     const collection = db.collection(collectionName)
     collection.find({}).toArray((err, result) => {
